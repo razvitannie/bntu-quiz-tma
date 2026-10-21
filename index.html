@@ -221,7 +221,7 @@
             line-height: 1.3;
         }
 
-        /* Блок статистики */
+        /* Стильные полоски для статистики ТОП-5 */
         .stats-box {
             background: var(--bg-color);
             border-radius: 14px;
@@ -236,25 +236,39 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-item {
             margin-bottom: 10px;
         }
 
-        .top-table {
-            width: 100%;
-            border-collapse: collapse;
+        .stat-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-info {
+            display: flex;
+            justify-content: space-between;
             font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .top-table th, .top-table td {
-            padding: 8px 10px;
-            text-align: left;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+        .stat-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .top-table th {
-            font-weight: 700;
-            color: var(--primary-color);
-            background: rgba(1, 96, 66, 0.05);
+        .stat-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.6s ease;
         }
 
         .btn-action {
@@ -337,11 +351,11 @@
             <p class="secret-word-hint">Скажи это слово волонтёру на стенде факультета, чтобы забрать свой подарок!</p>
         </div>
 
-        <!-- ТОП-5 НА ЭКРАНЕ РЕЗУЛЬТАТОВ -->
+        <!-- ТОП-5 С ПОЛОСКАМИ И СЧЕТЧИКАМИ -->
         <div class="stats-box">
-            <div class="stats-title">📊 ТОП-5 факультетов по опросу</div>
+            <div class="stats-title">📊 ТОП-5 фаворитов среди абитуриентов</div>
             <div id="stats-content">
-                <p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Обновление статистики...</p>
+                <p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка статистики...</p>
             </div>
         </div>
 
@@ -461,7 +475,7 @@
                 title: "9. Твой любимый формат учебы и практики:",
                 options: [
                     { text: "Хакатоны, написание кода и работа за ПК", facs: ["FITR", "FMMP"], icon: "🖥️" },
-                    { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "ATF", "MTF", "FIPMM"], icon: "🔧" },
+                    { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "АТФ", "MTF", "FIPMM"], icon: "🔧" },
                     { text: "Выезды на объекты, геодезия, просмотр зданий", facs: ["FTK", "SF", "AF", "FGDIE"], icon: "🗺️" },
                     { text: "Спортивные тренировки и испытания оборудования", facs: ["STF", "VTF"], icon: "⚽" }
                 ]
@@ -558,7 +572,7 @@
             // 1. Отправляем голос в таблицу
             sendVoteToSheet(fac.name);
 
-            // 2. Сразу подгружаем и отображаем ТОП-5
+            // 2. Загружаем и выводим ТОП-5 с полосками
             loadTop5Stats();
         }
 
@@ -585,30 +599,27 @@
                         return;
                     }
 
-                    let html = `
-                        <table class="top-table">
-                            <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Факультет</th>
-                                    <th style="text-align: right;">Голосов</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
-
                     const top5 = data.slice(0, 5);
-                    top5.forEach((item, index) => {
+                    const maxCount = top5[0].count > 0 ? top5[0].count : 1; // для расчета ширины полосок
+
+                    let html = '';
+                    top5.forEach((item) => {
+                        // Вычисляем процент ширины полоски относительно лидера
+                        const barWidth = Math.round((item.count / maxCount) * 100);
+
                         html += `
-                            <tr>
-                                <td><b>#${index + 1}</b></td>
-                                <td><b>${item.faculty}</b></td>
-                                <td style="text-align: right;">${item.count}</td>
-                            </tr>
+                            <div class="stat-item">
+                                <div class="stat-info">
+                                    <span><b>${item.faculty}</b></span>
+                                    <span style="color: var(--hint-color);">${item.count} чел.</span>
+                                </div>
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" style="width: ${barWidth}%;"></div>
+                                </div>
+                            </div>
                         `;
                     });
 
-                    html += `</tbody></table>`;
                     container.innerHTML = html;
                 })
                 .catch(err => {
