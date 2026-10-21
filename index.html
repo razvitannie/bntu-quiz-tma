@@ -56,7 +56,6 @@
             margin-bottom: 20px;
         }
 
-        /* Логотип БНТУ */
         .bntu-logo-container {
             display: flex;
             justify-content: center;
@@ -230,7 +229,7 @@
     <div id="start-screen" class="card">
         <div class="header">
             <div class="bntu-logo-container">
-                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/ thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
+                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
             </div>
             <span class="badge">БНТУ • День Открытых Дверей</span>
             <h1>Какой факультет БНТУ тебе подходит?</h1>
@@ -269,9 +268,9 @@
         </div>
 
         <div class="qr-section">
-            <p style="font-size: 12px; font-weight: 700;">🎁 Твой QR-код на памятный сувенир:</p>
+            <p id="qr-label" style="font-size: 12px; font-weight: 700;">🎁 Пропуск на факультет:</p>
             <div id="qrcode"></div>
-            <p style="font-size: 11px; color: var(--hint-color);">Покажи на стенде факультета в главном корпусе!</p>
+            <p style="font-size: 11px; color: var(--hint-color);">Покажи этот QR-код волонтёрам на стенде!</p>
         </div>
 
         <a id="map-link" href="https://yandex.by/maps/-/CDuPFL~C" target="_blank" class="btn-action">
@@ -465,10 +464,14 @@
         document.getElementById('match-score').innerText = `${percent}%`;
         document.getElementById('map-link').href = fac.map;
 
+        // Меняем подпись над QR-кодом под конкретный факультет
+        document.getElementById('qr-label').innerText = `🎁 Пропуск на ${fac.name} за мерчом:`;
+
+        // Генерация персонального QR-кода под факультет
         document.getElementById("qrcode").innerHTML = "";
-        const qrText = `BNTU-GIFT-${bestFac}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const uniqueCode = `BNTU-DOOR-2026-${bestFac}-${Math.floor(100 + Math.random() * 900)}`;
         new QRCode(document.getElementById("qrcode"), {
-            text: qrText,
+            text: uniqueCode,
             width: 120,
             height: 120,
             colorDark : "#016042",
