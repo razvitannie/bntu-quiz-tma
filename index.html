@@ -1,1 +1,434 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Твой путь в БНТУ</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #f4f6f9);
+            --text-color: var(--tg-theme-text-color, #1c1e21);
+            --hint-color: var(--tg-theme-hint-color, #8e8e93);
+            --primary-color: #016042; /* БНТУ Green */
+            --primary-light: #028a5e;
+            --card-bg: var(--tg-theme-secondary-bg-color, #ffffff);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(1, 96, 66, 0.1);
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: var(--hint-color);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 10px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            transition: width 0.4s ease;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            background: var(--bg-color);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn:active {
+            transform: scale(0.98);
+            border-color: var(--primary-color);
+            background: rgba(1, 96, 66, 0.05);
+        }
+
+        .option-icon {
+            font-size: 20px;
+        }
+
+        /* Result View */
+        .result-header {
+            text-align: center;
+        }
+
+        .match-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 6px 16px rgba(1, 96, 66, 0.3);
+        }
+
+        .match-score {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .match-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .fac-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+
+        .fac-desc {
+            font-size: 14px;
+            color: var(--hint-color);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .qr-section {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--hint-color);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- START SCREEN -->
+    <div id="start-screen" class="card">
+        <div class="header">
+            <span class="badge">БНТУ • День Открытых Дверей</span>
+            <h1>Найди свой идеальный факультет!</h1>
+            <p class="subtitle" style="margin-top: 8px;">Пройди интерактивный тест за 1 минуту и получи QR-код на мерч в главном корпусе БНТУ.</p>
+        </div>
+        <button class="btn-action" onclick="startQuiz()">
+            <span>Начать квест</span> 🚀
+        </button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" class="card hidden">
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div class="header" style="text-align: left;">
+            <span id="question-step" class="badge">Вопрос 1 из 4</span>
+            <h2 id="question-title" style="font-size: 18px; font-weight: 700;">Загрузка...</h2>
+        </div>
+        <div id="options-container" class="options-list"></div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" class="card hidden">
+        <div class="result-header">
+            <div class="match-circle">
+                <span id="match-score" class="match-score">95%</span>
+                <span class="match-label">мэтч</span>
+            </div>
+            <span class="badge">Твой идеальный выбор</span>
+            <h1 id="faculty-title" class="fac-title">ФИТР</h1>
+            <p id="faculty-desc" class="fac-desc">Факультет информационных технологий и робототехники — создание ИИ, ПО и робототехники будущего.</p>
+        </div>
+
+        <div class="qr-section">
+            <p style="font-size: 13px; font-weight: 600;">🎁 Твой QR-код на мерч и консультацию:</p>
+            <div id="qrcode"></div>
+            <p style="font-size: 11px; color: var(--hint-color);">Покажи этот код волонтёрам на стенде факультета!</p>
+        </div>
+
+        <a id="map-link" href="https://yandex.by/maps/-/CDuPFL~C" target="_blank" class="btn-action">
+            📍 Маршрут на стенд
+        </a>
+        <button class="btn-action btn-secondary" onclick="restartQuiz()">
+            🔄 Пройти заново
+        </button>
+    </div>
+</div>
+
+<script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) tg.expand();
+
+    const questions = [
+        {
+            title: "Чем тебе больше всего нравится заниматься в свободное время?",
+            options: [
+                { text: "Кодить, изучать гаджеты и ИИ", cluster: "IT", icon: "💻" },
+                { text: "Проектировать здания, рисовать, конструировать", cluster: "BUILD", icon: "🏛️" },
+                { text: "Разбираться в железе, авто и механизмах", cluster: "ENG", icon: "⚙️" },
+                { text: "Организовывать проекты, считать и управлять", cluster: "BIZ", icon: "📊" }
+            ]
+        },
+        {
+            title: "Какая суперсила пригодилась бы тебе в будущем?",
+            options: [
+                { text: "Писать идеальный код с первого раза", cluster: "IT", icon: "⚡" },
+                { text: "Строить города, стойкие к векам", cluster: "BUILD", icon: "🏗️" },
+                { text: "Создать самый быстрый электромобиль", cluster: "ENG", icon: "🏎️" },
+                { text: "Запустить международный стартап", cluster: "BIZ", icon: "🚀" }
+            ]
+        },
+        {
+            title: "Где тебе комфортнее всего работать?",
+            options: [
+                { text: "В уютном коворкинге за ноутбуком", cluster: "IT", icon: "☕" },
+                { text: "В современной цифровой лаборатории", cluster: "ENG", icon: "🔬" },
+                { text: "На архитектурной студии с макетами", cluster: "BUILD", icon: "📐" },
+                { text: "В офисе компании или на переговорах", cluster: "BIZ", icon: "💼" }
+            ]
+        },
+        {
+            title: "Какой школьный предмет заходил лучше всего?",
+            options: [
+                { text: "Информатика и математика", cluster: "IT", icon: "🧮" },
+                { text: "Черчение и геометрия", cluster: "BUILD", icon: "📏" },
+                { text: "Физика и механика", cluster: "ENG", icon: "🧲" },
+                { text: "Обществоведение и иностранный язык", cluster: "BIZ", icon: "🌐" }
+            ]
+        }
+    ];
+
+    const facultyData = {
+        IT: {
+            title: "ФИТР / ФТК",
+            fullName: "Информационные технологии и робототехника",
+            desc: "Искусственный интеллект, веб-разработка, системное программирование и автопилотируемые системы.",
+            score: "96%"
+        },
+        BUILD: {
+            title: "АФ / СФ / ФИЭШ",
+            fullName: "Архитектура и Строительство",
+            desc: "Градостроительство, BIM-моделирование, экологическая инженерия и дизайн современной городской среды.",
+            score: "94%"
+        },
+        ENG: {
+            title: "АТФ / МСФ / ЭФ",
+            fullName: "Автотракторный & Инженерный кластер",
+            desc: "Робототехнические комплексы, электротранспорт, приборостроение и энергетика будущего.",
+            score: "92%"
+        },
+        BIZ: {
+            title: "ФММП / ФЭУ",
+            fullName: "Маркетинг, Менеджмент и Экономика",
+            desc: "Управление бизнес-процессами, инженерный экономикс, стартап-инкубация и международный маркетинг.",
+            score: "95%"
+        }
+    };
+
+    let currentQuestion = 0;
+    let scores = { IT: 0, BUILD: 0, ENG: 0, BIZ: 0 };
+
+    function startQuiz() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById('question-step').innerText = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+        document.getElementById('question-title').innerText = q.title;
+        document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `<span class="option-icon">${opt.icon}</span> <span>${opt.text}</span>`;
+            btn.onclick = () => selectOption(opt.cluster);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectOption(cluster) {
+        if (tg?.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
+        }
+        scores[cluster]++;
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        // Находим кластер с максимальным баллом
+        let bestCluster = 'IT';
+        let maxScore = -1;
+        for (const [key, val] of Object.entries(scores)) {
+            if (val > maxScore) {
+                maxScore = val;
+                bestCluster = key;
+            }
+        }
+
+        const fac = facultyData[bestCluster];
+        document.getElementById('faculty-title').innerText = fac.title;
+        document.getElementById('faculty-desc').innerText = `${fac.fullName} — ${fac.desc}`;
+        document.getElementById('match-score').innerText = fac.score;
+
+        // Генерация QR-кода
+        document.getElementById("qrcode").innerHTML = "";
+        const qrText = `BNTU-GIFT-${bestCluster}-${Math.floor(1000 + Math.random() * 9000)}`;
+        new QRCode(document.getElementById("qrcode"), {
+            text: qrText,
+            width: 128,
+            height: 128,
+            colorDark : "#016042",
+            colorLight : "#ffffff"
+        });
+    }
+
+    function restartQuiz() {
+        currentQuestion = 0;
+        scores = { IT: 0, BUILD: 0, ENG: 0, BIZ: 0 };
+        document.getElementById('result-screen').classList.add('hidden');
+        document.getElementById('start-screen').classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
