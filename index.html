@@ -221,7 +221,7 @@
             line-height: 1.3;
         }
 
-        /* Стильные полоски для статистики ТОП-5 */
+        /* Статистика с процентами */
         .stats-box {
             background: var(--bg-color);
             border-radius: 14px;
@@ -351,7 +351,7 @@
             <p class="secret-word-hint">Скажи это слово волонтёру на стенде факультета, чтобы забрать свой подарок!</p>
         </div>
 
-        <!-- ТОП-5 С ПОЛОСКАМИ И СЧЕТЧИКАМИ -->
+        <!-- ТОП-5 С ПРОЦЕНТАМИ -->
         <div class="stats-box">
             <div class="stats-title">📊 ТОП-5 фаворитов среди абитуриентов</div>
             <div id="stats-content">
@@ -475,7 +475,7 @@
                 title: "9. Твой любимый формат учебы и практики:",
                 options: [
                     { text: "Хакатоны, написание кода и работа за ПК", facs: ["FITR", "FMMP"], icon: "🖥️" },
-                    { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "АТФ", "MTF", "FIPMM"], icon: "🔧" },
+                    { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "ATF", "MTF", "FIPMM"], icon: "🔧" },
                     { text: "Выезды на объекты, геодезия, просмотр зданий", facs: ["FTK", "SF", "AF", "FGDIE"], icon: "🗺️" },
                     { text: "Спортивные тренировки и испытания оборудования", facs: ["STF", "VTF"], icon: "⚽" }
                 ]
@@ -572,7 +572,7 @@
             // 1. Отправляем голос в таблицу
             sendVoteToSheet(fac.name);
 
-            // 2. Загружаем и выводим ТОП-5 с полосками
+            // 2. Загружаем и выводим ТОП-5 с процентами
             loadTop5Stats();
         }
 
@@ -599,22 +599,26 @@
                         return;
                     }
 
-                    const top5 = data.slice(0, 5);
-                    const maxCount = top5[0].count > 0 ? top5[0].count : 1; // для расчета ширины полосок
+                    // Считаем общее количество проголосовавших
+                    const totalVotes = data.reduce((sum, item) => sum + item.count, 0);
 
+                    const top5 = data.slice(0, 5);
                     let html = '';
+
                     top5.forEach((item) => {
-                        // Вычисляем процент ширины полоски относительно лидера
-                        const barWidth = Math.round((item.count / maxCount) * 100);
+                        // Вычисляем процент от общего числа проголосовавших
+                        const percentage = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
 
                         html += `
                             <div class="stat-item">
                                 <div class="stat-info">
                                     <span><b>${item.faculty}</b></span>
-                                    <span style="color: var(--hint-color);">${item.count} чел.</span>
+                                    <span style="color: var(--primary-color); font-weight: 700;">
+                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span>
+                                    </span>
                                 </div>
                                 <div class="stat-bar-bg">
-                                    <div class="stat-bar-fill" style="width: ${barWidth}%;"></div>
+                                    <div class="stat-bar-fill" style="width: ${percentage}%;"></div>
                                 </div>
                             </div>
                         `;
