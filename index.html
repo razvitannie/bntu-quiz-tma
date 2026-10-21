@@ -65,7 +65,7 @@
         }
 
         .bntu-logo {
-            width: 80px;
+            width: 90px;
             height: auto;
             object-fit: contain;
             display: block;
@@ -250,9 +250,9 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="card">
         <div class="header">
-            <!-- Логотип БНТУ только на главной и строго по центру -->
+            <!-- Логотип БНТУ только на главной и по центру -->
             <div class="bntu-logo-container">
-                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
+                <img src="Logo_BNTU.png" alt="БНТУ Логотип" class="bntu-logo">
             </div>
             <span class="badge">БНТУ • День Открытых Дверей</span>
             <h1>Какой факультет БНТУ тебе подходит?</h1>
@@ -319,181 +319,3 @@
         SF:   { name: "СФ", full: "Строительный факультет", desc: "Проектирование и возведение уникальных зданий и сооружений.", secret: "ПЕНТХАУС 🏗️", map: "https://yandex.by/maps/-/CDuPFL~C" },
         AF:   { name: "АФ", full: "Архитектурный факультет", desc: "Архитектура, урбанистика, дизайн архитектурной среды.", secret: "ПАРФЕНОН 🏛️", map: "https://yandex.by/maps/-/CDuPFL~C" },
         FMMP: { name: "ФММП", full: "Факультет маркетинга, менеджмента и предпринимательства", desc: "Бизнес, цифровой маркетинг, торговое оборудование и экономика.", secret: "СТАРТАП 🚀", map: "https://yandex.by/maps/-/CDuPFL~C" },
-        FEU:  { name: "ФТУГ (ФЭУ)", full: "Факультет технологий управления и гуманитаризации", desc: "Менеджмент, таможенное дело, экономика и дизайн товаров.", secret: "ТОП-МЕНЕДЖЕР 💼", map: "https://yandex.by/maps/-/CDuPFL~C" },
-        VTF:  { name: "ВТФ", full: "Военно-технический факультет", desc: "Инженерное обеспечение войск, военная техника и дисциплина.", secret: "ТАКТИКА 🛡️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-        STF:  { name: "СТФ", full: "Спортивно-технический факультет", desc: "Спортивная инженерия, биомеханика и физическая реабилитация.", secret: "ЧЕМПИОН 🏆", map: "https://yandex.by/maps/-/CDuPFL~C" }
-    };
-
-    const questions = [
-        {
-            title: "1. Чем тебе больше всего нравится заниматься?",
-            options: [
-                { text: "Писать код, разрабатывать сайты и приложения", facs: ["FITR", "PSF"], icon: "💻" },
-                { text: "Рисовать, проектировать красивый дизайн и пространства", facs: ["AF", "SF"], icon: "🎨" },
-                { text: "Разбираться, как устроены машины, моторы и механизмы", facs: ["ATF", "MSF"], icon: "⚙️" },
-                { text: "Придумывать бизнес-идеи, продвигать и продавать", facs: ["FMMP", "FEU"], icon: "📈" }
-            ]
-        },
-        {
-            title: "2. Какой учебный предмет у тебя на хорошем счету?",
-            options: [
-                { text: "Математика и Информатика", facs: ["FITR", "FMMP"], icon: "🧮" },
-                { text: "Физика и Электротехника", facs: ["EF", "PSF", "MSF"], icon: "⚡" },
-                { text: "Черчение, Геометрия и ИЗО", facs: ["AF", "SF", "FTK"], icon: "📐" },
-                { text: "Химия, Экология и Биология", facs: ["FIESH", "MTF", "STF"], icon: "🧪" }
-            ]
-        },
-        {
-            title: "3. Выбери проект мечты, который ты хотел бы создать:",
-            options: [
-                { text: "Мобильную игру или алгоритм нейросети", facs: ["FITR"], icon: "🤖" },
-                { text: "Небоскрёб или мост нового поколения", facs: ["SF", "FTK", "AF"], icon: "🌉" },
-                { text: "Новый беспилотный электромобиль", facs: ["ATF", "MSF"], icon: "🚗" },
-                { text: "Экологичную электростанцию на солнечной энергии", facs: ["EF", "FIESH"], icon: "☀️" }
-            ]
-        },
-        {
-            title: "4. Где ты видишь идеальное место работы?",
-            options: [
-                { text: "В уютном IT-офисе или удалённо у бассейна", facs: ["FITR", "FMMP"], icon: "🏝️" },
-                { text: "На современной высокотехнологичной фабрике/лаборатории", facs: ["MSF", "MTF", "PSF"], icon: "🔬" },
-                { text: "На архитектурной студии или стройплощадке", facs: ["AF", "SF"], icon: "🏗️" },
-                { text: "В государственном ведомстве или таможне", facs: ["FEU", "VTF"], icon: "🏛️" }
-            ]
-        },
-        {
-            title: "5. Какая сверхспособность тебе ближе?",
-            options: [
-                { text: "Управлять роботами силой мысли", facs: ["FITR", "MSF"], icon: "🔮" },
-                { text: "Превращать руины в современный «умный» город", facs: ["AF", "FIESH"], icon: "🏙️" },
-                { text: "Договориться с кем угодно о чём угодно", facs: ["FMMP", "FEU"], icon: "🤝" },
-                { text: "Железная дисциплина и навыки защиты", facs: ["VTF", "STF"], icon: "🛡️" }
-            ]
-        },
-        {
-            title: "6. Как ты предпочитаешь решать сложные задачи?",
-            options: [
-                { text: "Ищу логическую ошибку в алгоритме", facs: ["FITR", "PSF"], icon: "🔍" },
-                { text: "Создаю физический макет или чертёж", facs: ["SF", "AF", "FTK"], icon: "✏️" },
-                { text: "Экспериментирую со свойствами материалов", facs: ["MTF", "FIESH"], icon: "🔥" },
-                { text: "Составляю финансовый план и распределяю задачи", facs: ["FMMP", "FEU"], icon: "📊" }
-            ]
-        },
-        {
-            title: "7. Какое направление технологий тебя вдохновляет больше всего?",
-            options: [
-                { text: "Лазерная оптика и медицинская техника", facs: ["PSF", "STF"], icon: "🩺" },
-                { text: "Атомная энергетика и электрические сети", facs: ["EF"], icon: "💡" },
-                { text: "Автомагистрали, логистические центры и автотранспорт", facs: ["ATF", "FTK"], icon: "🚛" },
-                { text: "Переработка отходов и чистая вода для городов", facs: ["FIESH"], icon: "🌱" }
-            ]
-        },
-        {
-            title: "8. Какую роль в командном проекте ты выберешь?",
-            options: [
-                { text: "Главный разработчик / технарь", facs: ["FITR", "PSF", "MSF"], icon: "⚙️" },
-                { text: "Креативный директор и дизайнер", facs: ["AF", "FEU"], icon: "🎨" },
-                { text: "Проектный менеджер и капитан", facs: ["FMMP", "VTF"], icon: "👑" },
-                { text: "Главный инженер и тестировщик", facs: ["SF", "EF", "ATF"], icon: "🛠️" }
-            ]
-        },
-        {
-            title: "9. Твой любимый формат учебы и практики:",
-            options: [
-                { text: "Хакатоны, написание кода и работа за ПК", facs: ["FITR", "FMMP"], icon: "🖥️" },
-                { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "ATF", "MTF"], icon: "🔧" },
-                { text: "Выезды на объекты, геодезия, просмотр зданий", facs: ["FTK", "SF", "AF"], icon: "🗺️" },
-                { text: "Спортивные тренировки и испытания оборудования", facs: ["STF", "VTF"], icon: "⚽" }
-            ]
-        },
-        {
-            title: "10. Что для тебя главное в будущей профессии?",
-            options: [
-                { text: "Высокая зарплата и свобода передвижения", facs: ["FITR", "FMMP"], icon: "💎" },
-                { text: "Возможность оставить след в виде построенных объектов", facs: ["SF", "AF", "FTK"], icon: "🏛️" },
-                { text: "Уверенность, стабильность и выслуга", facs: ["VTF", "EF"], icon: "🎖️" },
-                { text: "Создание новых реальных вещей и инноваций", facs: ["MSF", "PSF", "MTF", "FIESH"], icon: "🚀" }
-            ]
-        }
-    ];
-
-    let currentQuestion = 0;
-    let scores = {};
-
-    Object.keys(faculties).forEach(f => scores[f] = 0);
-
-    function startQuiz() {
-        document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
-        renderQuestion();
-    }
-
-    function renderQuestion() {
-        const q = questions[currentQuestion];
-        document.getElementById('question-step').innerText = `Вопрос ${currentQuestion + 1} из 10`;
-        document.getElementById('question-title').innerText = q.title;
-        document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-
-        q.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = `<span class="option-icon">${opt.icon}</span> <span>${opt.text}</span>`;
-            btn.onclick = () => selectOption(opt.facs);
-            container.appendChild(btn);
-        });
-    }
-
-    function selectOption(facList) {
-        if (tg?.HapticFeedback) {
-            tg.HapticFeedback.impactOccurred('light');
-        }
-        
-        facList.forEach(fac => {
-            if (scores[fac] !== undefined) scores[fac] += 2;
-        });
-
-        currentQuestion++;
-
-        if (currentQuestion < questions.length) {
-            renderQuestion();
-        } else {
-            showResults();
-        }
-    }
-
-    function showResults() {
-        document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('result-screen').classList.remove('hidden');
-
-        let bestFac = 'FITR';
-        let maxScore = -1;
-        for (const [key, val] of Object.entries(scores)) {
-            if (val > maxScore) {
-                maxScore = val;
-                bestFac = key;
-            }
-        }
-
-        const fac = faculties[bestFac];
-        document.getElementById('faculty-title').innerText = fac.name;
-        document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
-        
-        const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
-        document.getElementById('match-score').innerText = `${percent}%`;
-        document.getElementById('map-link').href = fac.map;
-
-        document.getElementById('secret-word-text').innerText = fac.secret;
-    }
-
-    function restartQuiz() {
-        currentQuestion = 0;
-        Object.keys(faculties).forEach(f => scores[f] = 0);
-        document.getElementById('result-screen').classList.add('hidden');
-        document.getElementById('start-screen').classList.remove('hidden');
-    }
-</script>
-</body>
-</html>
