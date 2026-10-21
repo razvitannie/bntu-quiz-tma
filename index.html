@@ -31,9 +31,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 16px;
+            padding: 12px 16px 24px 16px;
         }
 
         .container {
@@ -42,6 +42,7 @@
             margin: 0 auto;
         }
 
+        /* Карточки для вопросов и результатов */
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -50,22 +51,29 @@
             transition: all 0.3s ease;
         }
 
+        /* Без серой карточки на главном экране */
+        .start-clean-card {
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        /* Логотип БНТУ по центру */
+        /* Логотип БНТУ по центру и максимально сверху */
         .bntu-logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 16px auto;
+            margin: 8px auto 12px auto;
             width: 100%;
         }
 
         .bntu-logo {
-            width: 90px;
+            width: 100px;
             height: auto;
             object-fit: contain;
             display: block;
@@ -73,28 +81,29 @@
 
         .badge {
             display: inline-block;
-            background: rgba(1, 96, 66, 0.1);
+            background: rgba(1, 96, 66, 0.12);
             color: var(--primary-color);
             font-weight: 700;
             font-size: 12px;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         h1 {
-            font-size: 22px;
+            font-size: 23px;
             font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 8px;
+            line-height: 1.25;
+            margin-bottom: 10px;
         }
 
         p.subtitle {
             color: var(--hint-color);
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 14px;
+            line-height: 1.45;
+            margin-bottom: 24px;
         }
 
         .progress-container {
@@ -218,13 +227,13 @@
 
         .btn-action {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 14px;
             border: none;
             background: var(--primary-color);
             color: white;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
             margin-bottom: 8px;
             text-decoration: none;
@@ -233,12 +242,14 @@
             justify-content: center;
             gap: 8px;
             touch-action: manipulation;
+            box-shadow: 0 4px 12px rgba(1, 96, 66, 0.25);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--hint-color);
             border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: none;
         }
 
         .hidden {
@@ -249,15 +260,15 @@
 <body>
 
 <div class="container">
-    <!-- START SCREEN -->
-    <div id="start-screen" class="card">
+    <!-- START SCREEN (Без прямоугольника карточки) -->
+    <div id="start-screen" class="start-clean-card">
         <div class="header">
             <div class="bntu-logo-container">
                 <img src="Logo_BNTU.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
             </div>
             <span class="badge">БНТУ • День Открытых Дверей</span>
             <h1>Какой факультет БНТУ тебе подходит?</h1>
-            <p class="subtitle" style="margin-top: 8px;">Пройди тест из 10 вопросов, найди свой мэтч и назови секретное слово волонтёрам!</p>
+            <p class="subtitle">Пройди тест из 10 вопросов, найди свой мэтч и назови секретное слово волонтёрам!</p>
         </div>
         <button id="start-btn" class="btn-action" type="button">
             <span>Пройти тест (10 вопросов)</span> 🚀
@@ -511,11 +522,9 @@
             window.scrollTo(0, 0);
         }
 
-        // Привязываем клики через слушатели событий
         document.getElementById('start-btn').addEventListener('click', startQuiz);
         document.getElementById('restart-btn').addEventListener('click', restartQuiz);
 
-        // Инициализация баллов при загрузке
         initScores();
     });
 </script>
