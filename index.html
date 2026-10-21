@@ -56,6 +56,20 @@
             margin-bottom: 20px;
         }
 
+        /* Логотип БНТУ */
+        .bntu-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .bntu-logo {
+            width: 72px;
+            height: auto;
+            object-fit: contain;
+        }
+
         .badge {
             display: inline-block;
             background: rgba(1, 96, 66, 0.1);
@@ -215,9 +229,12 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="card">
         <div class="header">
+            <div class="bntu-logo-container">
+                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/ thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
+            </div>
             <span class="badge">БНТУ • День Открытых Дверей</span>
             <h1>Какой факультет БНТУ тебе подходит?</h1>
-            <p class="subtitle" style="margin-top: 8px;">Пройди детокс-тест из 10 вопросов, найди идеальное направление и получи QR-код на мерч!</p>
+            <p class="subtitle" style="margin-top: 8px;">Пройди тест из 10 вопросов, найди идеальное направление и получи QR-код на мерч!</p>
         </div>
         <button class="btn-action" onclick="startQuiz()">
             <span>Пройти тест (10 вопросов)</span> 🚀
@@ -239,6 +256,9 @@
     <!-- RESULT SCREEN -->
     <div id="result-screen" class="card hidden">
         <div class="header" style="margin-bottom: 12px;">
+            <div class="bntu-logo-container">
+                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" style="width: 54px;">
+            </div>
             <div class="match-circle">
                 <span id="match-score" class="match-score">98%</span>
                 <span style="font-size: 9px; text-transform: uppercase;">мэтч</span>
@@ -380,7 +400,6 @@
     let currentQuestion = 0;
     let scores = {};
 
-    // Инициализация баллов
     Object.keys(faculties).forEach(f => scores[f] = 0);
 
     function startQuiz() {
@@ -429,7 +448,6 @@
         document.getElementById('quiz-screen').classList.add('hidden');
         document.getElementById('result-screen').classList.remove('hidden');
 
-        // Находим факультет с максимальным баллом
         let bestFac = 'FITR';
         let maxScore = -1;
         for (const [key, val] of Object.entries(scores)) {
@@ -443,12 +461,10 @@
         document.getElementById('faculty-title').innerText = fac.name;
         document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
         
-        // Расчет процентов
         const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
         document.getElementById('match-score').innerText = `${percent}%`;
         document.getElementById('map-link').href = fac.map;
 
-        // Генерация QR-кода
         document.getElementById("qrcode").innerHTML = "";
         const qrText = `BNTU-GIFT-${bestFac}-${Math.floor(1000 + Math.random() * 9000)}`;
         new QRCode(document.getElementById("qrcode"), {
