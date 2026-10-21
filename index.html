@@ -55,17 +55,20 @@
             margin-bottom: 20px;
         }
 
+        /* Логотип БНТУ строго по центру на главной */
         .bntu-logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 12px;
+            margin: 0 auto 16px auto;
+            width: 100%;
         }
 
         .bntu-logo {
-            width: 72px;
+            width: 80px;
             height: auto;
             object-fit: contain;
+            display: block;
         }
 
         .badge {
@@ -247,6 +250,7 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="card">
         <div class="header">
+            <!-- Логотип БНТУ только на главной и строго по центру -->
             <div class="bntu-logo-container">
                 <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
             </div>
@@ -274,9 +278,6 @@
     <!-- RESULT SCREEN -->
     <div id="result-screen" class="card hidden">
         <div class="header" style="margin-bottom: 12px;">
-            <div class="bntu-logo-container">
-                <img src="https://bntu.by/images/logo.png" alt="БНТУ Логотип" class="bntu-logo" style="width: 54px;">
-            </div>
             <div class="match-circle">
                 <span id="match-score" class="match-score">98%</span>
                 <span style="font-size: 9px; text-transform: uppercase;">мэтч</span>
@@ -484,7 +485,6 @@
         document.getElementById('match-score').innerText = `${percent}%`;
         document.getElementById('map-link').href = fac.map;
 
-        // Вывод тематического кодового слова
         document.getElementById('secret-word-text').innerText = fac.secret;
     }
 
