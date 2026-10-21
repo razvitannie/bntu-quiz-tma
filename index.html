@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Твой путь в БНТУ</title>
+    <title>БНТУ • Выбор Факультета</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +12,7 @@
             --bg-color: var(--tg-theme-bg-color, #f4f6f9);
             --text-color: var(--tg-theme-text-color, #1c1e21);
             --hint-color: var(--tg-theme-hint-color, #8e8e93);
-            --primary-color: #016042; /* БНТУ Green */
+            --primary-color: #016042; /* БНТУ Зелёный */
             --primary-light: #028a5e;
             --card-bg: var(--tg-theme-secondary-bg-color, #ffffff);
             --border-radius: 16px;
@@ -36,7 +35,6 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            overflow-x: hidden;
         }
 
         .container {
@@ -55,7 +53,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .badge {
@@ -68,11 +66,11 @@
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 8px;
@@ -80,17 +78,16 @@
 
         p.subtitle {
             color: var(--hint-color);
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.4;
         }
 
-        /* Progress Bar */
         .progress-container {
             width: 100%;
             height: 6px;
             background: rgba(0,0,0,0.06);
             border-radius: 10px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
@@ -98,51 +95,45 @@
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-            transition: width 0.4s ease;
+            transition: width 0.3s ease;
         }
 
-        /* Options */
         .options-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 16px;
         }
 
         .option-btn {
             background: var(--bg-color);
             border: 2px solid transparent;
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 12px 14px;
             text-align: left;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-color);
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .option-btn:active {
             transform: scale(0.98);
             border-color: var(--primary-color);
-            background: rgba(1, 96, 66, 0.05);
+            background: rgba(1, 96, 66, 0.08);
         }
 
         .option-icon {
-            font-size: 20px;
-        }
-
-        /* Result View */
-        .result-header {
-            text-align: center;
+            font-size: 18px;
         }
 
         .match-circle {
-            width: 90px;
-            height: 90px;
+            width: 86px;
+            height: 86px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
@@ -150,19 +141,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
+            margin: 0 auto 14px;
             box-shadow: 0 6px 16px rgba(1, 96, 66, 0.3);
         }
 
         .match-score {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
-        }
-
-        .match-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            opacity: 0.9;
         }
 
         .fac-title {
@@ -170,27 +155,29 @@
             font-weight: 800;
             color: var(--primary-color);
             margin-bottom: 6px;
+            text-align: center;
         }
 
         .fac-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--hint-color);
             line-height: 1.5;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
         .qr-section {
             background: var(--bg-color);
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         #qrcode {
             display: flex;
             justify-content: center;
-            margin: 12px 0;
+            margin: 10px 0;
         }
 
         .btn-action {
@@ -203,17 +190,12 @@
             font-weight: 700;
             font-size: 15px;
             cursor: pointer;
-            margin-bottom: 10px;
-            transition: background 0.2s;
+            margin-bottom: 8px;
+            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-action:hover {
-            background: var(--primary-light);
         }
 
         .btn-secondary {
@@ -234,11 +216,11 @@
     <div id="start-screen" class="card">
         <div class="header">
             <span class="badge">БНТУ • День Открытых Дверей</span>
-            <h1>Найди свой идеальный факультет!</h1>
-            <p class="subtitle" style="margin-top: 8px;">Пройди интерактивный тест за 1 минуту и получи QR-код на мерч в главном корпусе БНТУ.</p>
+            <h1>Какой факультет БНТУ тебе подходит?</h1>
+            <p class="subtitle" style="margin-top: 8px;">Пройди детокс-тест из 10 вопросов, найди идеальное направление и получи QR-код на мерч!</p>
         </div>
         <button class="btn-action" onclick="startQuiz()">
-            <span>Начать квест</span> 🚀
+            <span>Пройти тест (10 вопросов)</span> 🚀
         </button>
     </div>
 
@@ -247,33 +229,33 @@
         <div class="progress-container">
             <div id="progress-bar" class="progress-bar"></div>
         </div>
-        <div class="header" style="text-align: left;">
-            <span id="question-step" class="badge">Вопрос 1 из 4</span>
-            <h2 id="question-title" style="font-size: 18px; font-weight: 700;">Загрузка...</h2>
+        <div class="header" style="text-align: left; margin-bottom: 12px;">
+            <span id="question-step" class="badge">Вопрос 1 из 10</span>
+            <h2 id="question-title" style="font-size: 16px; font-weight: 700;">Загрузка...</h2>
         </div>
         <div id="options-container" class="options-list"></div>
     </div>
 
     <!-- RESULT SCREEN -->
     <div id="result-screen" class="card hidden">
-        <div class="result-header">
+        <div class="header" style="margin-bottom: 12px;">
             <div class="match-circle">
-                <span id="match-score" class="match-score">95%</span>
-                <span class="match-label">мэтч</span>
+                <span id="match-score" class="match-score">98%</span>
+                <span style="font-size: 9px; text-transform: uppercase;">мэтч</span>
             </div>
             <span class="badge">Твой идеальный выбор</span>
             <h1 id="faculty-title" class="fac-title">ФИТР</h1>
-            <p id="faculty-desc" class="fac-desc">Факультет информационных технологий и робототехники — создание ИИ, ПО и робототехники будущего.</p>
+            <p id="faculty-desc" class="fac-desc"></p>
         </div>
 
         <div class="qr-section">
-            <p style="font-size: 13px; font-weight: 600;">🎁 Твой QR-код на мерч и консультацию:</p>
+            <p style="font-size: 12px; font-weight: 700;">🎁 Твой QR-код на памятный сувенир:</p>
             <div id="qrcode"></div>
-            <p style="font-size: 11px; color: var(--hint-color);">Покажи этот код волонтёрам на стенде факультета!</p>
+            <p style="font-size: 11px; color: var(--hint-color);">Покажи на стенде факультета в главном корпусе!</p>
         </div>
 
         <a id="map-link" href="https://yandex.by/maps/-/CDuPFL~C" target="_blank" class="btn-action">
-            📍 Маршрут на стенд
+            📍 Найти факультет на карте
         </a>
         <button class="btn-action btn-secondary" onclick="restartQuiz()">
             🔄 Пройти заново
@@ -285,74 +267,121 @@
     const tg = window.Telegram?.WebApp;
     if (tg) tg.expand();
 
+    const faculties = {
+        FITR: { name: "ФИТР", full: "Факультет информационных технологий и робототехники", desc: "Программирование, искусственный интеллект, роботы и автоматизация.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        FTK:  { name: "ФТК", full: "Факультет транспортных коммуникаций", desc: "Строительство дорог, мостов, тоннелей и геодезия.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        ATF:  { name: "АТФ", full: "Автотракторный факультет", desc: "Автомобили, электромобили, логистика и автосервис.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        MSF:  { name: "МСФ", full: "Машиностроительный факультет", desc: "Инновационное машиностроение, 3D-моделирование и гидропневмоавтоматика.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        MTF:  { name: "МТФ", full: "Механико-технологический факультет", desc: "Материалы будущего, металлургия, нанотехнологии и сварка.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        EF:   { name: "ЭФ", full: "Энергетический факультет", desc: "Атомная и традиционная энергетика, возобновляемые источники энергии.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        PSF:  { name: "ПСФ", full: "Приборостроительный факультет", desc: "Лазерная техника, медицинские приборы, микросистемотехника и оптика.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        FIESH:{ name: "ФИЭШ", full: "Факультет инженерной экологии и городского хозяйства", desc: "Экология, водоснабжение, защита окружающей среды и «Умный город».", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        SF:   { name: "СФ", full: "Строительный факультет", desc: "Проектирование и возведение уникальных зданий и сооружений.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        AF:   { name: "АФ", full: "Архитектурный факультет", desc: "Архитектура, урбанистика, дизайн архитектурной среды.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        FMMP: { name: "ФММП", full: "Факультет маркетинга, менеджмента и предпринимательства", desc: "Бизнес, цифровой маркетинг, торговое оборудование и экономика.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        FEU:  { name: "ФТУГ (ФЭУ)", full: "Факультет технологий управления и гуманитаризации", desc: "Менеджмент, таможенное дело, экономика и дизайн товаров.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        VTF:  { name: "ВТФ", full: "Военно-технический факультет", desc: "Инженерное обеспечение войск, военная техника и дисциплина.", map: "https://yandex.by/maps/-/CDuPFL~C" },
+        STF:  { name: "СТФ", full: "Спортивно-технический факультет", desc: "Спортивная инженерия, биомеханика и физическая реабилитация.", map: "https://yandex.by/maps/-/CDuPFL~C" }
+    };
+
     const questions = [
         {
-            title: "Чем тебе больше всего нравится заниматься в свободное время?",
+            title: "1. Чем тебе больше всего нравится заниматься?",
             options: [
-                { text: "Кодить, изучать гаджеты и ИИ", cluster: "IT", icon: "💻" },
-                { text: "Проектировать здания, рисовать, конструировать", cluster: "BUILD", icon: "🏛️" },
-                { text: "Разбираться в железе, авто и механизмах", cluster: "ENG", icon: "⚙️" },
-                { text: "Организовывать проекты, считать и управлять", cluster: "BIZ", icon: "📊" }
+                { text: "Писать код, разрабатывать сайты и приложения", facs: ["FITR", "PSF"], icon: "💻" },
+                { text: "Рисовать, проектировать красивый дизайн и пространства", facs: ["AF", "SF"], icon: "🎨" },
+                { text: "Разбираться, как устроены машины, моторы и механизмы", facs: ["ATF", "MSF"], icon: "⚙️" },
+                { text: "Придумывать бизнес-идеи, продвигать и продавать", facs: ["FMMP", "FEU"], icon: "📈" }
             ]
         },
         {
-            title: "Какая суперсила пригодилась бы тебе в будущем?",
+            title: "2. Какой учебный предмет у тебя на хорошем счету?",
             options: [
-                { text: "Писать идеальный код с первого раза", cluster: "IT", icon: "⚡" },
-                { text: "Строить города, стойкие к векам", cluster: "BUILD", icon: "🏗️" },
-                { text: "Создать самый быстрый электромобиль", cluster: "ENG", icon: "🏎️" },
-                { text: "Запустить международный стартап", cluster: "BIZ", icon: "🚀" }
+                { text: "Математика и Информатика", facs: ["FITR", "FMMP"], icon: "🧮" },
+                { text: "Физика и Электротехника", facs: ["EF", "PSF", "MSF"], icon: "⚡" },
+                { text: "Черчение, Геометрия и ИЗО", facs: ["AF", "SF", "FTK"], icon: "📐" },
+                { text: "Химия, Экология и Биология", facs: ["FIESH", "MTF", "STF"], icon: "🧪" }
             ]
         },
         {
-            title: "Где тебе комфортнее всего работать?",
+            title: "3. Выбери проект мечты, который ты хотел бы создать:",
             options: [
-                { text: "В уютном коворкинге за ноутбуком", cluster: "IT", icon: "☕" },
-                { text: "В современной цифровой лаборатории", cluster: "ENG", icon: "🔬" },
-                { text: "На архитектурной студии с макетами", cluster: "BUILD", icon: "📐" },
-                { text: "В офисе компании или на переговорах", cluster: "BIZ", icon: "💼" }
+                { text: "Мобильную игру или алгоритм нейросети", facs: ["FITR"], icon: "🤖" },
+                { text: "Небоскрёб или мост нового поколения", facs: ["SF", "FTK", "AF"], icon: "🌉" },
+                { text: "Новый беспилотный электромобиль", facs: ["ATF", "MSF"], icon: "🚗" },
+                { text: "Экологичную электростанцию на солнечной энергии", facs: ["EF", "FIESH"], icon: "☀️" }
             ]
         },
         {
-            title: "Какой школьный предмет заходил лучше всего?",
+            title: "4. Где ты видишь идеальное место работы?",
             options: [
-                { text: "Информатика и математика", cluster: "IT", icon: "🧮" },
-                { text: "Черчение и геометрия", cluster: "BUILD", icon: "📏" },
-                { text: "Физика и механика", cluster: "ENG", icon: "🧲" },
-                { text: "Обществоведение и иностранный язык", cluster: "BIZ", icon: "🌐" }
+                { text: "В уютном IT-офисе или удалённо у бассейна", facs: ["FITR", "FMMP"], icon: "🏝️" },
+                { text: "На современной высокотехнологичной фабрике/лаборатории", facs: ["MSF", "MTF", "PSF"], icon: "🔬" },
+                { text: "На архитектурной студии или стройплощадке", facs: ["AF", "SF"], icon: "🏗️" },
+                { text: "В государственном ведомстве или таможне", facs: ["FEU", "VTF"], icon: "🏛️" }
+            ]
+        },
+        {
+            title: "5. Какая сверхспособность тебе ближе?",
+            options: [
+                { text: "Управлять роботами силой мысли", facs: ["FITR", "MSF"], icon: "🔮" },
+                { text: "Превращать руины в современный «умный» город", facs: ["AF", "FIESH"], icon: "🏙️" },
+                { text: "Договориться с кем угодно о чём угодно", facs: ["FMMP", "FEU"], icon: "🤝" },
+                { text: "Железная дисциплина и навыки защиты", facs: ["VTF", "STF"], icon: "🛡️" }
+            ]
+        },
+        {
+            title: "6. Как ты предпочитаешь решать сложные задачи?",
+            options: [
+                { text: "Ищу логическую ошибку в алгоритме", facs: ["FITR", "PSF"], icon: "🔍" },
+                { text: "Создаю физический макет или чертёж", facs: ["SF", "AF", "FTK"], icon: "✏️" },
+                { text: "Экспериментирую со свойствами материалов", facs: ["MTF", "FIESH"], icon: "🔥" },
+                { text: "Составляю финансовый план и распределяю задачи", facs: ["FMMP", "FEU"], icon: "📊" }
+            ]
+        },
+        {
+            title: "7. Какое направление технологий тебя вдохновляет больше всего?",
+            options: [
+                { text: "Лазерная оптика и медицинская техника", facs: ["PSF", "STF"], icon: "🩺" },
+                { text: "Атомная энергетика и электрические сети", facs: ["EF"], icon: "💡" },
+                { text: "Автомагистрали, логистические центры и автотранспорт", facs: ["ATF", "FTK"], icon: "🚛" },
+                { text: "Переработка отходов и чистая вода для городов", facs: ["FIESH"], icon: "🌱" }
+            ]
+        },
+        {
+            title: "8. Какую роль в командном проекте ты выберешь?",
+            options: [
+                { text: "Главный разработчик / технарь", facs: ["FITR", "PSF", "MSF"], icon: "⚙️" },
+                { text: "Креативный директор и дизайнер", facs: ["AF", "FEU"], icon: "🎨" },
+                { text: "Проектный менеджер и капитан", facs: ["FMMP", "VTF"], icon: "👑" },
+                { text: "Главный инженер и тестировщик", facs: ["SF", "EF", "ATF"], icon: "🛠️" }
+            ]
+        },
+        {
+            title: "9. Твой любимый формат учебы и практики:",
+            options: [
+                { text: "Хакатоны, написание кода и работа за ПК", facs: ["FITR", "FMMP"], icon: "🖥️" },
+                { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "ATF", "MTF"], icon: "🔧" },
+                { text: "Выезды на объекты, геодезия, просмотр зданий", facs: ["FTK", "SF", "AF"], icon: "🗺️" },
+                { text: "Спортивные тренировки и испытания оборудования", facs: ["STF", "VTF"], icon: "⚽" }
+            ]
+        },
+        {
+            title: "10. Что для тебя главное в будущей профессии?",
+            options: [
+                { text: "Высокая зарплата и свобода передвижения", facs: ["FITR", "FMMP"], icon: "💎" },
+                { text: "Возможность оставить след в виде построенных объектов", facs: ["SF", "AF", "FTK"], icon: "🏛️" },
+                { text: "Уверенность, стабильность и выслуга", facs: ["VTF", "EF"], icon: "🎖️" },
+                { text: "Создание новых реальных вещей и инноваций", facs: ["MSF", "PSF", "MTF", "FIESH"], icon: "🚀" }
             ]
         }
     ];
 
-    const facultyData = {
-        IT: {
-            title: "ФИТР / ФТК",
-            fullName: "Информационные технологии и робототехника",
-            desc: "Искусственный интеллект, веб-разработка, системное программирование и автопилотируемые системы.",
-            score: "96%"
-        },
-        BUILD: {
-            title: "АФ / СФ / ФИЭШ",
-            fullName: "Архитектура и Строительство",
-            desc: "Градостроительство, BIM-моделирование, экологическая инженерия и дизайн современной городской среды.",
-            score: "94%"
-        },
-        ENG: {
-            title: "АТФ / МСФ / ЭФ",
-            fullName: "Автотракторный & Инженерный кластер",
-            desc: "Робототехнические комплексы, электротранспорт, приборостроение и энергетика будущего.",
-            score: "92%"
-        },
-        BIZ: {
-            title: "ФММП / ФЭУ",
-            fullName: "Маркетинг, Менеджмент и Экономика",
-            desc: "Управление бизнес-процессами, инженерный экономикс, стартап-инкубация и международный маркетинг.",
-            score: "95%"
-        }
-    };
-
     let currentQuestion = 0;
-    let scores = { IT: 0, BUILD: 0, ENG: 0, BIZ: 0 };
+    let scores = {};
+
+    // Инициализация баллов
+    Object.keys(faculties).forEach(f => scores[f] = 0);
 
     function startQuiz() {
         document.getElementById('start-screen').classList.add('hidden');
@@ -362,7 +391,7 @@
 
     function renderQuestion() {
         const q = questions[currentQuestion];
-        document.getElementById('question-step').innerText = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+        document.getElementById('question-step').innerText = `Вопрос ${currentQuestion + 1} из 10`;
         document.getElementById('question-title').innerText = q.title;
         document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
 
@@ -373,16 +402,20 @@
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerHTML = `<span class="option-icon">${opt.icon}</span> <span>${opt.text}</span>`;
-            btn.onclick = () => selectOption(opt.cluster);
+            btn.onclick = () => selectOption(opt.facs);
             container.appendChild(btn);
         });
     }
 
-    function selectOption(cluster) {
+    function selectOption(facList) {
         if (tg?.HapticFeedback) {
             tg.HapticFeedback.impactOccurred('light');
         }
-        scores[cluster]++;
+        
+        facList.forEach(fac => {
+            if (scores[fac] !== undefined) scores[fac] += 2;
+        });
+
         currentQuestion++;
 
         if (currentQuestion < questions.length) {
@@ -396,28 +429,32 @@
         document.getElementById('quiz-screen').classList.add('hidden');
         document.getElementById('result-screen').classList.remove('hidden');
 
-        // Находим кластер с максимальным баллом
-        let bestCluster = 'IT';
+        // Находим факультет с максимальным баллом
+        let bestFac = 'FITR';
         let maxScore = -1;
         for (const [key, val] of Object.entries(scores)) {
             if (val > maxScore) {
                 maxScore = val;
-                bestCluster = key;
+                bestFac = key;
             }
         }
 
-        const fac = facultyData[bestCluster];
-        document.getElementById('faculty-title').innerText = fac.title;
-        document.getElementById('faculty-desc').innerText = `${fac.fullName} — ${fac.desc}`;
-        document.getElementById('match-score').innerText = fac.score;
+        const fac = faculties[bestFac];
+        document.getElementById('faculty-title').innerText = fac.name;
+        document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
+        
+        // Расчет процентов
+        const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
+        document.getElementById('match-score').innerText = `${percent}%`;
+        document.getElementById('map-link').href = fac.map;
 
         // Генерация QR-кода
         document.getElementById("qrcode").innerHTML = "";
-        const qrText = `BNTU-GIFT-${bestCluster}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const qrText = `BNTU-GIFT-${bestFac}-${Math.floor(1000 + Math.random() * 9000)}`;
         new QRCode(document.getElementById("qrcode"), {
             text: qrText,
-            width: 128,
-            height: 128,
+            width: 120,
+            height: 120,
             colorDark : "#016042",
             colorLight : "#ffffff"
         });
@@ -425,7 +462,7 @@
 
     function restartQuiz() {
         currentQuestion = 0;
-        scores = { IT: 0, BUILD: 0, ENG: 0, BIZ: 0 };
+        Object.keys(faculties).forEach(f => scores[f] = 0);
         document.getElementById('result-screen').classList.add('hidden');
         document.getElementById('start-screen').classList.remove('hidden');
     }
