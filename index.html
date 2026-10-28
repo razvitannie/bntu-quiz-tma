@@ -48,12 +48,8 @@
             padding: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-        }
-
-        .start-clean-card {
-            background: transparent !important;
-            box-shadow: none !important;
-            padding: 0 !important;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -141,6 +137,7 @@
             align-items: center;
             gap: 10px;
             width: 100%;
+            user-select: none;
         }
 
         .option-btn:active {
@@ -289,6 +286,13 @@
             gap: 8px;
             touch-action: manipulation;
             box-shadow: 0 4px 12px rgba(1, 96, 66, 0.25);
+            position: relative;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
         }
 
         .btn-secondary {
@@ -307,7 +311,7 @@
 
 <div class="container">
     <!-- START SCREEN -->
-    <div id="start-screen" class="start-clean-card">
+    <div id="start-screen" class="card" style="text-align: center;">
         <div class="header">
             <div class="bntu-logo-container">
                 <img src="Logo_BNTU.png" alt="ФИТР БНТУ" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
@@ -368,7 +372,6 @@
 </div>
 
 <script>
-    // Ваша актуальная ссылка из Google Apps Script
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbThGRCiQ4ZErSedblLkyLyBsU1NHMBnTCLoe_uRBYDsEvvO9lqjZx1tdBeLqySyeyQ/exec';
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -548,7 +551,7 @@
                 btn.className = 'option-btn';
                 btn.type = 'button';
                 btn.innerHTML = `<span class="option-icon">${opt.icon}</span> <span>${opt.text}</span>`;
-                btn.addEventListener('click', () => selectOption(opt.facs));
+                btn.addEventListener('click', function() { selectOption(opt.facs); });
                 container.appendChild(btn);
             });
         }
@@ -586,4 +589,95 @@
             }
 
             const fac = faculties[bestFac];
-            document.getElementById('faculty-title
+            document.getElementById('faculty-title').innerText = fac.name;
+            document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
+            
+            const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
+            document.getElementById('match-score').innerText = `${percent}%`;
+            document.getElementById('map-link').href = fac.map;
+            document.getElementById('secret-word-text').innerText = fac.secret;
+
+            sendVoteToSheet(fac.name);
+            loadTopStats();
+        }
+
+        function sendVoteToSheet(specialtyName) {
+            if (!WEB_APP_URL) return;
+            
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ faculty: specialtyName })
+            }).catch(err => console.log('Stat send error:', err));
+        }
+
+        function loadTopStats() {
+            const container = document.getElementById('stats-content');
+            container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка рейтинга...</p>';
+
+            fetch(WEB_APP_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (!data || data.length === 0) {
+                        container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Будь первым, кто прошел опрос!</p>';
+                        return;
+                    }
+
+                    const totalVotes = data.reduce((sum, item) => sum + item.count, 0);
+
+                    let html = '';
+                    data.forEach((item) => {
+                        const percentage = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
+
+                        html += `
+                            <div class="stat-item">
+                                <div class="stat-info">
+                                    <span style="font-size: 12px;"><b>${item.faculty}</b></span>
+                                    <span style="color: var(--primary-color); font-weight: 700; font-size: 12px;">
+                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 10px;">(${item.count} чел.)</span>
+                                    </span>
+                                </div>
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" style="width: ${percentage}%;"></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML = html;
+                })
+                .catch(err => {
+                    container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Рейтинг станет доступен после первых прохождений.</p>';
+                });
+        }
+
+        function restartQuiz() {
+            initScores();
+            currentQuestion = 0;
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        if (startBtn) {
+            startBtn.addEventListener('click', startQuiz);
+            startBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startQuiz();
+            }, { passive: false });
+        }
+
+        if (restartBtn) {
+            restartBtn.addEventListener('click', restartQuiz);
+        }
+
+        initScores();
+    });
+</script>
+</body>
+</html>
