@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>БНТУ • Выбор Факультета</title>
+    <title>ФИТР БНТУ • Выбор Специальности</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -310,11 +310,11 @@
     <div id="start-screen" class="start-clean-card">
         <div class="header">
             <div class="bntu-logo-container">
-                <img src="Logo_BNTU.png" alt="БНТУ Логотип" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
+                <img src="Logo_BNTU.png" alt="ФИТР БНТУ" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
             </div>
-            <span class="badge">БНТУ • День Открытых Дверей</span>
-            <h1>Какой факультет БНТУ тебе подходит?</h1>
-            <p class="subtitle">Пройди тест из 10 вопросов, найди свой мэтч и назови секретное слово волонтёрам!</p>
+            <span class="badge">ФИТР БНТУ • День Открытых Дверей</span>
+            <h1>Какое направление ФИТР тебе подходит?</h1>
+            <p class="subtitle">Пройди тест из 10 вопросов, найди своё идеальное направление и назови кодовое слово волонтёрам!</p>
         </div>
         <button id="start-btn" class="btn-action" type="button">
             <span>Пройти тест (10 вопросов)</span> 🚀
@@ -340,27 +340,27 @@
                 <span id="match-score" class="match-score">98%</span>
                 <span style="font-size: 9px; text-transform: uppercase;">мэтч</span>
             </div>
-            <span class="badge">Твой идеальный выбор</span>
-            <h1 id="faculty-title" class="fac-title">ФИТР</h1>
+            <span class="badge">Твоя будущая специальность</span>
+            <h1 id="faculty-title" class="fac-title">Программная инженерия</h1>
             <p id="faculty-desc" class="fac-desc"></p>
         </div>
 
         <div class="secret-word-box">
             <div class="secret-word-title">🔑 Твоё кодовое слово:</div>
-            <div id="secret-word-text" class="secret-word">HELLO WORLD</div>
-            <p class="secret-word-hint">Скажи это слово волонтёру на стенде факультета, чтобы забрать свой подарок!</p>
+            <div id="secret-word-text" class="secret-word">CPLUSPLUS</div>
+            <p class="secret-word-hint">Скажи это слово волонтёру на стенде ФИТР, чтобы забрать свой подарок!</p>
         </div>
 
-        <!-- ТОП-5 С ПРОЦЕНТАМИ -->
+        <!-- СТАТИСТИКА НАПРАВЛЕНИЙ -->
         <div class="stats-box">
-            <div class="stats-title">📊 ТОП-5 фаворитов среди абитуриентов</div>
+            <div class="stats-title">📊 ТОП направлений ФИТР среди абитуриентов</div>
             <div id="stats-content">
                 <p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка статистики...</p>
             </div>
         </div>
 
         <a id="map-link" href="https://yandex.by/maps/-/CDuPFL~C" target="_blank" class="btn-action">
-            📍 Найти стенд на карте БНТУ
+            📍 Найти стенд ФИТР на карте БНТУ
         </a>
         <button id="restart-btn" class="btn-action btn-secondary" type="button" style="margin-top: 6px;">
             🔄 Пройти заново
@@ -369,7 +369,8 @@
 </div>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzW6VyWHw5Dkua1RXZw6LSMmfk5Qh0l4kGiKKJQg06pnM_atuJfNTe4oVybMCOcl18/exec';
+    // Ваша актуальная рабочая ссылка Google Apps Script
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbThGRCiQ4ZErSedblLkyLyBsU1NHMBnTCLoe_uRBYDsEvvO9lqjZx1tdBeLqySyeyQ/exec';
 
     document.addEventListener("DOMContentLoaded", function () {
         const tg = window.Telegram?.WebApp;
@@ -378,115 +379,141 @@
             tg.expand();
         }
 
+        // 6 реальных направлений ФИТР БНТУ
         const faculties = {
-            FITR:  { name: "ФИТР", full: "Факультет информационных технологий и робототехники", desc: "Программирование, искусственный интеллект, роботы и автоматизация.", secret: "HELLO WORLD 💻", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FTK:   { name: "ФТК", full: "Факультет транспортных коммуникаций", desc: "Строительство дорог, мостов, тоннелей и транспортная инфраструктура.", secret: "МАГИСТРАЛЬ 🌉", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            ATF:   { name: "АТФ", full: "Автотракторный факультет", desc: "Автомобили, электромобили, логистика и автосервис.", secret: "ФОРСАЖ 🏎️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            MSF:   { name: "МСФ", full: "Машиностроительный факультет", desc: "Инновационное машиностроение, 3D-моделирование и робототехника.", secret: "3D ПРИНТЕР ⚙️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            MTF:   { name: "МТФ", full: "Механико-технологический факультет", desc: "Материалы будущего, металлургия, нанотехнологии и сварка.", secret: "НАНОСПЛАВ 🔬", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            EF:    { name: "ЭФ", full: "Энергетический факультет", desc: "Атомная и традиционная энергетика, возобновляемые источники энергии.", secret: "ТЕСЛА ⚡", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            PSF:   { name: "ПСФ", full: "Приборостроительный факультет", desc: "Лазерная техника, медицинские приборы, микросистемотехника и оптика.", secret: "КВАНТОВЫЙ ЛАЗЕР 🔮", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            AF:    { name: "АФ", full: "Архитектурный факультет", desc: "Архитектура, урбанистика, дизайн архитектурной среды.", secret: "ПАРФЕНОН 🏛️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            SF:    { name: "СФ", full: "Строительный факультет", desc: "Проектирование и возведение уникальных зданий и сооружений.", secret: "ПЕНТХАУС 🏗️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FMMP:  { name: "ФММП", full: "Факультет маркетинга, менеджмента и предпринимательства", desc: "Бизнес, цифровой маркетинг, торговое оборудование и экономика.", secret: "СТАРТАП 🚀", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FTUG:  { name: "ФТУГ", full: "Факультет технологий управления и гуманитаризации", desc: "Менеджмент, экономика, таможенное дело и дизайн товаров.", secret: "ТОП-МЕНЕДЖЕР 💼", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            VTF:   { name: "ВТФ", full: "Военно-технический факультет", desc: "Инженерное обеспечение войск, военная техника и дисциплина.", secret: "ТАКТИКА 🛡️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            STF:   { name: "СТФ", full: "Спортивно-технический факультет", desc: "Спортивная инженерия, биомеханика и физическая реабилитация.", secret: "ЧЕМПИОН 🏆", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            IPF:   { name: "ИПФ", full: "Инженерно-педагогический факультет", desc: "Инженерное дело и профессиональное образование.", secret: "ПЕДАГОГ-ИНЖЕНЕР 📚", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FGDIE: { name: "ФГДИЭ", full: "Факультет горного дела и инженерной экологии", desc: "Горное дело, геодезия и инженерная экология.", secret: "УМНЫЕ НЕДРА ⛏️", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FES:   { name: "ФЭС", full: "Факультет энергетического строительства", desc: "Гидротехническое и энергетическое строительство.", secret: "ГИДРОЭНЕРГИЯ 🌊", map: "https://yandex.by/maps/-/CDuPFL~C" },
-            FIPMM: { name: "ФИПММ", full: "Факультет инструментального производства и малой механизации", desc: "Инструментальные системы и высокоточное производство.", secret: "МИКРОТЕХНИКА 🛠️", map: "https://yandex.by/maps/-/CDuPFL~C" }
+            SE: { 
+                name: "Программная инженерия", 
+                full: "Бакалавр. Инженер-программист", 
+                desc: "Разработка ПО, архитектура сложных систем, алгоритмы, базы данных и современные языки программирования.", 
+                secret: "CPLUSPLUS 💻", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            },
+            IT: { 
+                name: "Информационные системы и технологии", 
+                full: "В проектировании и производстве • Бакалавр. Инженер-программист", 
+                desc: "Интеграция IT-решений в реальное производство, САПР и цифровизация инженерных задач.", 
+                secret: "CYBER_SYS ⚡", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            },
+            AUT_PRIB: { 
+                name: "Автоматизация в приборостроении и радиоэлектронике", 
+                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
+                desc: "Создание умных приборов, микроэлектроника, датчики и автоматизированные системы контроля.", 
+                secret: "SENSORS 🔬", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            },
+            AUT_ENERG: { 
+                name: "Автоматизация в энергетике", 
+                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
+                desc: "Управление энергосетями, автоматика электростанций и ресурсосберегающие технологии.", 
+                secret: "ENERGY_PRO 💡", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            },
+            AUT_DRIVE: { 
+                name: "Автоматизированные электроприводы", 
+                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
+                desc: "Современные электроприводы, системы управления движением и промышленная мехатроника.", 
+                secret: "ROBOT_DRIVE ⚙️", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            },
+            ROBOTS: { 
+                name: "Робототехнические системы", 
+                full: "Промышленные роботы и робототехнические комплексы • Бакалавр. Инженер", 
+                desc: "Проектирование и программирование промышленных роботов, манипуляторов и гибких производств.", 
+                secret: "TRANSFORMER 🤖", 
+                map: "https://yandex.by/maps/-/CDuPFL~C" 
+            }
         };
 
         const questions = [
             {
-                title: "1. Чем тебе больше всего нравится заниматься?",
+                title: "1. Что из этого тебе ближе всего по душе?",
                 options: [
-                    { text: "Писать код, разрабатывать сайты и приложения", facs: ["FITR", "PSF"], icon: "💻" },
-                    { text: "Рисовать, проектировать красивый дизайн и пространства", facs: ["AF", "SF"], icon: "🎨" },
-                    { text: "Разбираться, как устроены машины, моторы и механизмы", facs: ["ATF", "MSF", "FIPMM"], icon: "⚙️" },
-                    { text: "Придумывать бизнес-идеи, продвигать и продавать", facs: ["FMMP", "FTUG"], icon: "📈" }
+                    { text: "Писать чистый код, создавать приложения и алгоритмы", facs: ["SE"], icon: "💻" },
+                    { text: "Собирать схемы, паять микросхемы и работать с радиоэлектроникой", facs: ["AUT_PRIB"], icon: "🔌" },
+                    { text: "Программировать промышленные манипуляторы и роботов", facs: ["ROBOTS"], icon: "🤖" },
+                    { text: "Настраивать сложные цифровые системы для заводов и предприятий", facs: ["IT", "AUT_DRIVE"], icon: "🏭" }
                 ]
             },
             {
-                title: "2. Какой учебный предмет у тебя на хорошем счету?",
+                title: "2. Какой школьный предмет или область тебе интереснее?",
                 options: [
-                    { text: "Математика и Информатика", facs: ["FITR", "FMMP"], icon: "🧮" },
-                    { text: "Физика и Электротехника", facs: ["EF", "PSF", "MSF", "FES"], icon: "⚡" },
-                    { text: "Черчение, Геометрия и ИЗО", facs: ["AF", "SF", "FTK"], icon: "📐" },
-                    { text: "Химия, Экология и Биология", facs: ["FGDIE", "MTF", "STF", "IPF"], icon: "🧪" }
+                    { text: "Информатика, логика и дискретная математика", facs: ["SE", "IT"], icon: "🧮" },
+                    { text: "Физика, электричество и магнетизм", facs: ["AUT_ENERG", "AUT_PRIB"], icon: "⚡" },
+                    { text: "Механика, кинематика и черчение", facs: ["ROBOTS", "AUT_DRIVE"], icon: "⚙️" },
+                    { text: "Компьютерное моделирование и проектирование", facs: ["IT", "ROBOTS"], icon: "🖥️" }
                 ]
             },
             {
-                title: "3. Выбери проект мечты, который ты хотел бы создать:",
+                title: "3. Какую задачу ты бы с удовольствием решал целый день?",
                 options: [
-                    { text: "Мобильную игру или алгоритм нейросети", facs: ["FITR"], icon: "🤖" },
-                    { text: "Небоскрёб или мост нового поколения", facs: ["SF", "FTK", "AF"], icon: "🌉" },
-                    { text: "Новый беспилотный электромобиль", facs: ["ATF", "MSF"], icon: "🚗" },
-                    { text: "Экологичную электростанцию на солнечной энергии", facs: ["EF", "FES"], icon: "☀️" }
+                    { text: "Искать и исправлять баги в программном коде", facs: ["SE"], icon: "🔍" },
+                    { text: "Оптимизировать работу мощного электропривода или станка", facs: ["AUT_DRIVE"], icon: "⚡" },
+                    { text: "Заставлять робота выполнять точные физические действия", facs: ["ROBOTS"], icon: "🦾" },
+                    { text: "Проектировать автоматику для энергосистемы или завода", facs: ["AUT_ENERG", "AUT_PRIB"], icon: "🔋" }
                 ]
             },
             {
-                title: "4. Где ты видишь идеальное место работы?",
+                title: "4. Где ты видишь своё идеальное рабочее место?",
                 options: [
-                    { text: "В уютном IT-офисе или удалённо у бассейна", facs: ["FITR", "FMMP"], icon: "🏝️" },
-                    { text: "На современной высокотехнологичной фабрике/лаборатории", facs: ["MSF", "MTF", "PSF", "FIPMM"], icon: "🔬" },
-                    { text: "На архитектурной студии, стройке или в карьере", facs: ["AF", "SF", "FGDIE"], icon: "🏗️" },
-                    { text: "В государственном ведомстве, вузе или таможне", facs: ["FTUG", "VTF", "IPF"], icon: "🏛️" }
+                    { text: "В кресле IT-компании за разработкой крупного софта", facs: ["SE", "IT"], icon: "🏢" },
+                    { text: "В инновационной лаборатории робототехники", facs: ["ROBOTS"], icon: "🔬" },
+                    { text: "На высокотехнологичном производстве с умными конвейерами", facs: ["AUT_DRIVE", "IT"], icon: "🏗️" },
+                    { text: "На крупнейших объектах энергетики и приборостроения", facs: ["AUT_ENERG", "AUT_PRIB"], icon: "💡" }
                 ]
             },
             {
-                title: "5. Какая сверхспособность тебе ближе?",
+                title: "5. Какая технология вызывает у тебя наибольший восторг?",
                 options: [
-                    { text: "Управлять роботами силой мысли", facs: ["FITR", "MSF"], icon: "🔮" },
-                    { text: "Превращать руины в современный «умный» город", facs: ["AF", "FGDIE"], icon: "🏙️" },
-                    { text: "Договориться с кем угодно о чём угодно", facs: ["FMMP", "FTUG"], icon: "🤝" },
-                    { text: "Железная дисциплина и навыки защиты", facs: ["VTF", "STF"], icon: "🛡️" }
+                    { text: "Искусственный интеллект и облачные базы данных", facs: ["SE", "IT"], icon: "🧠" },
+                    { text: "Автономные беспилотные аппараты и манипуляторы", facs: ["ROBOTS"], icon: "🛸" },
+                    { text: "Умные датчики, микроконтроллеры и IoT-устройства", facs: ["AUT_PRIB"], icon: "📡" },
+                    { text: "Возобновляемая энергетика и автоматика энергосистем", facs: ["AUT_ENERG"], icon: "☀️" }
                 ]
             },
             {
-                title: "6. Как ты предпочитаешь решать сложные задачи?",
+                title: "6. Какой формат практической работы тебе ближе?",
                 options: [
-                    { text: "Ищу логическую ошибку в алгоритме", facs: ["FITR", "PSF"], icon: "🔍" },
-                    { text: "Создаю физический макет или чертёж", facs: ["SF", "AF", "FTK"], icon: "✏️" },
-                    { text: "Экспериментирую со свойствами материалов", facs: ["MTF", "FGDIE"], icon: "🔥" },
-                    { text: "Составляю план, обучаю других и распределяю задачи", facs: ["FMMP", "IPF"], icon: "📊" }
+                    { text: "Хакатоны, репозитории на GitHub и разработка приложений", facs: ["SE"], icon: "🌐" },
+                    { text: "Интерфейсы САПР, проектирование баз данных и производство", facs: ["IT"], icon: "🗂️" },
+                    { text: "Настройка плат, осциллографы и микроэлектроника", facs: ["AUT_PRIB"], icon: "🛠️" },
+                    { text: "Сборка механических узлов, датчиков и тестирование роботов", facs: ["ROBOTS", "AUT_DRIVE"], icon: "🔩" }
                 ]
             },
             {
-                title: "7. Какое направление технологий тебя вдохновляет больше всего?",
+                title: "7. Какую роль в технологическом проекте ты бы выбрал?",
                 options: [
-                    { text: "Лазерная оптика и медицинская техника", facs: ["PSF", "STF"], icon: "🩺" },
-                    { text: "Атомная и гидроэнергетика, электросети", facs: ["EF", "FES"], icon: "💡" },
-                    { text: "Автомагистрали, логистические центры и автотранспорт", facs: ["ATF", "FTK"], icon: "🚛" },
-                    { text: "Экология недр и чистая вода для городов", facs: ["FGDIE"], icon: "🌱" }
+                    { text: "Главный архитектор программного обеспечения", facs: ["SE"], icon: "👑" },
+                    { text: "Инженер по интеграции софта и железа", facs: ["IT", "AUT_PRIB"], icon: "🔗" },
+                    { text: "Специалист по управлению движением и приводами", facs: ["AUT_DRIVE"], icon: "🎯" },
+                    { text: "Разработчик алгоритмов управления для роботов", facs: ["ROBOTS"], icon: "🤖" }
                 ]
             },
             {
-                title: "8. Какую роль в командном проекте ты выберешь?",
+                title: "8. Как ты относишься к физическому миру вокруг нас?",
                 options: [
-                    { text: "Главный разработчик / технарь", facs: ["FITR", "PSF", "MSF", "FIPMM"], icon: "⚙️" },
-                    { text: "Креативный директор и дизайнер", facs: ["AF", "FTUG"], icon: "🎨" },
-                    { text: "Проектный менеджер и капитан", facs: ["FMMP", "VTF"], icon: "👑" },
-                    { text: "Главный инженер и преподаватель", facs: ["SF", "EF", "ATF", "IPF"], icon: "🛠️" }
+                    { text: "Мне интереснее виртуальный мир и чистый код", facs: ["SE"], icon: "💻" },
+                    { text: "Хочу управлять физическими процессами с помощью компьютеров", facs: ["IT", "AUT_ENERG"], icon: "📊" },
+                    { text: "Хочу создавать физические устройства, которые оживают", facs: ["AUT_PRIB", "ROBOTS"], icon: "⚙️" },
+                    { text: "Люблю мощные электромеханические системы и моторы", facs: ["AUT_DRIVE"], icon: "⚡" }
                 ]
             },
             {
-                title: "9. Твой любимый формат учебы и практики:",
+                title: "9. Какую задачу автоматизации ты считаешь самой крутой?",
                 options: [
-                    { text: "Хакатоны, написание кода и работа за ПК", facs: ["FITR", "FMMP"], icon: "🖥️" },
-                    { text: "Работа с реальными станками, авто и 3D-принтерами", facs: ["MSF", "ATF", "MTF", "FIPMM"], icon: "🔧" },
-                    { text: "Выезды на объекты, геодезия, просмотр зданий", facs: ["FTK", "SF", "AF", "FGDIE"], icon: "🗺️" },
-                    { text: "Спортивные тренировки и испытания оборудования", facs: ["STF", "VTF"], icon: "⚽" }
+                    { text: "Создание умного сервиса или платформы для миллионов пользователей", facs: ["SE", "IT"], icon: "🌍" },
+                    { text: "Полная автономность завода без участия человека", facs: ["AUT_DRIVE", "AUT_ENERG"], icon: "🏭" },
+                    { text: "Создание робота-помощника или промышленного манипулятора", facs: ["ROBOTS"], icon: "🤖" },
+                    { text: "Разработка сверхточного медицинского или измерительного прибора", facs: ["AUT_PRIB"], icon: "🩺" }
                 ]
             },
             {
-                title: "10. Что для тебя главное в будущей профессии?",
+                title: "10. Что для тебя главное в будущей инженерной карьере?",
                 options: [
-                    { text: "Высокая зарплата и свобода передвижения", facs: ["FITR", "FMMP"], icon: "💎" },
-                    { text: "Возможность оставить след в виде построенных объектов", facs: ["SF", "AF", "FTK", "FES"], icon: "🏛️" },
-                    { text: "Уверенность, стабильность и выслуга", facs: ["VTF", "EF"], icon: "🎖️" },
-                    { text: "Создание новых реальных вещей и инноваций", facs: ["MSF", "PSF", "MTF", "FGDIE", "IPF"], icon: "🚀" }
+                    { text: "Интересные IT-проекты, высокая зарплата и свобода удалёнки", facs: ["SE", "IT"], icon: "💎" },
+                    { text: "Работа с передовым «железом», роботами и станками с ЧПУ", facs: ["ROBOTS", "AUT_DRIVE"], icon: "🚀" },
+                    { text: "Участие в создании наукоёмких приборов и микроэлектроники", facs: ["AUT_PRIB"], icon: "🔬" },
+                    { text: "Управление критически важными энергетическими объектами страны", facs: ["AUT_ENERG"], icon: "⚡" }
                 ]
             }
         ];
@@ -551,7 +578,7 @@
             document.getElementById('result-screen').classList.remove('hidden');
             window.scrollTo(0, 0);
 
-            let bestFac = 'FITR';
+            let bestFac = 'SE';
             let maxScore = -1;
             for (const [key, val] of Object.entries(scores)) {
                 if (val > maxScore) {
@@ -572,22 +599,22 @@
             // 1. Отправляем голос в таблицу
             sendVoteToSheet(fac.name);
 
-            // 2. Загружаем и выводим ТОП-5 с процентами
-            loadTop5Stats();
+            // 2. Загружаем и выводим статистику направлений ФИТР
+            loadStats();
         }
 
-        function sendVoteToSheet(facultyName) {
+        function sendVoteToSheet(specialtyName) {
             if (!WEB_APP_URL) return;
             
             fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ faculty: facultyName })
+                body: JSON.stringify({ faculty: specialtyName })
             }).catch(err => console.log('Stat send error:', err));
         }
 
-        function loadTop5Stats() {
+        function loadStats() {
             const container = document.getElementById('stats-content');
             container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка рейтинга...</p>';
 
@@ -599,14 +626,10 @@
                         return;
                     }
 
-                    // Считаем общее количество проголосовавших
                     const totalVotes = data.reduce((sum, item) => sum + item.count, 0);
-
-                    const top5 = data.slice(0, 5);
                     let html = '';
 
-                    top5.forEach((item) => {
-                        // Вычисляем процент от общего числа проголосовавших
+                    data.forEach((item) => {
                         const percentage = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
 
                         html += `
@@ -614,7 +637,7 @@
                                 <div class="stat-info">
                                     <span><b>${item.faculty}</b></span>
                                     <span style="color: var(--primary-color); font-weight: 700;">
-                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span>
+                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span> 
                                     </span>
                                 </div>
                                 <div class="stat-bar-bg">
