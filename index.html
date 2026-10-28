@@ -48,8 +48,12 @@
             padding: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
+        }
+
+        .start-clean-card {
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
         }
 
         .header {
@@ -137,7 +141,6 @@
             align-items: center;
             gap: 10px;
             width: 100%;
-            user-select: none;
         }
 
         .option-btn:active {
@@ -170,12 +173,11 @@
         }
 
         .fac-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--primary-color);
             margin-bottom: 6px;
             text-align: center;
-            line-height: 1.3;
         }
 
         .fac-desc {
@@ -205,9 +207,9 @@
         }
 
         .secret-word {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: #016042;
             margin: 8px 0;
             user-select: all;
@@ -219,6 +221,7 @@
             line-height: 1.3;
         }
 
+        /* Статистика с процентами */
         .stats-box {
             background: var(--bg-color);
             border-radius: 14px;
@@ -286,13 +289,6 @@
             gap: 8px;
             touch-action: manipulation;
             box-shadow: 0 4px 12px rgba(1, 96, 66, 0.25);
-            position: relative;
-            z-index: 10;
-            user-select: none;
-        }
-
-        .btn-action:active {
-            transform: scale(0.98);
         }
 
         .btn-secondary {
@@ -311,14 +307,14 @@
 
 <div class="container">
     <!-- START SCREEN -->
-    <div id="start-screen" class="card" style="text-align: center;">
+    <div id="start-screen" class="start-clean-card">
         <div class="header">
             <div class="bntu-logo-container">
                 <img src="Logo_BNTU.png" alt="ФИТР БНТУ" class="bntu-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/BNTU_Logo.svg/512px-BNTU_Logo.svg.png'">
             </div>
             <span class="badge">ФИТР БНТУ • День Открытых Дверей</span>
             <h1>Какое направление ФИТР тебе подходит?</h1>
-            <p class="subtitle">Пройди тест из 10 вопросов, найди своё идеальное направление в IT, робототехнике или автоматизации!</p>
+            <p class="subtitle">Пройди тест из 10 вопросов, найди своё идеальное направление и назови кодовое слово волонтёрам!</p>
         </div>
         <button id="start-btn" class="btn-action" type="button">
             <span>Пройти тест (10 вопросов)</span> 🚀
@@ -351,10 +347,11 @@
 
         <div class="secret-word-box">
             <div class="secret-word-title">🔑 Твоё кодовое слово:</div>
-            <div id="secret-word-text" class="secret-word">CODE_MASTER</div>
-            <p class="secret-word-hint">Скажи это слово волонтёрам на стенде ФИТР, чтобы забрать свой подарок!</p>
+            <div id="secret-word-text" class="secret-word">CPLUSPLUS</div>
+            <p class="secret-word-hint">Скажи это слово волонтёру на стенде ФИТР, чтобы забрать свой подарок!</p>
         </div>
 
+        <!-- СТАТИСТИКА НАПРАВЛЕНИЙ -->
         <div class="stats-box">
             <div class="stats-title">📊 ТОП направлений ФИТР среди абитуриентов</div>
             <div id="stats-content">
@@ -363,7 +360,7 @@
         </div>
 
         <a id="map-link" href="https://yandex.by/maps/-/CDuPFL~C" target="_blank" class="btn-action">
-            📍 Найти стенд ФИТР на карте
+            📍 Найти стенд ФИТР на карте БНТУ
         </a>
         <button id="restart-btn" class="btn-action btn-secondary" type="button" style="margin-top: 6px;">
             🔄 Пройти заново
@@ -372,6 +369,7 @@
 </div>
 
 <script>
+    // Ваша актуальная рабочая ссылка Google Apps Script
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbThGRCiQ4ZErSedblLkyLyBsU1NHMBnTCLoe_uRBYDsEvvO9lqjZx1tdBeLqySyeyQ/exec';
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -381,6 +379,7 @@
             tg.expand();
         }
 
+        // 6 реальных направлений ФИТР БНТУ
         const faculties = {
             SE: { 
                 name: "Программная инженерия", 
@@ -551,7 +550,7 @@
                 btn.className = 'option-btn';
                 btn.type = 'button';
                 btn.innerHTML = `<span class="option-icon">${opt.icon}</span> <span>${opt.text}</span>`;
-                btn.addEventListener('click', function() { selectOption(opt.facs); });
+                btn.addEventListener('click', () => selectOption(opt.facs));
                 container.appendChild(btn);
             });
         }
@@ -597,8 +596,11 @@
             document.getElementById('map-link').href = fac.map;
             document.getElementById('secret-word-text').innerText = fac.secret;
 
+            // 1. Отправляем голос в таблицу
             sendVoteToSheet(fac.name);
-            loadTopStats();
+
+            // 2. Загружаем и выводим статистику направлений ФИТР
+            loadStats();
         }
 
         function sendVoteToSheet(specialtyName) {
@@ -612,7 +614,7 @@
             }).catch(err => console.log('Stat send error:', err));
         }
 
-        function loadTopStats() {
+        function loadStats() {
             const container = document.getElementById('stats-content');
             container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка рейтинга...</p>';
 
@@ -625,17 +627,17 @@
                     }
 
                     const totalVotes = data.reduce((sum, item) => sum + item.count, 0);
-
                     let html = '';
+
                     data.forEach((item) => {
                         const percentage = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
 
                         html += `
                             <div class="stat-item">
                                 <div class="stat-info">
-                                    <span style="font-size: 12px;"><b>${item.faculty}</b></span>
-                                    <span style="color: var(--primary-color); font-weight: 700; font-size: 12px;">
-                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 10px;">(${item.count} чел.)</span>
+                                    <span><b>${item.faculty}</b></span>
+                                    <span style="color: var(--primary-color); font-weight: 700;">
+                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span> 
                                     </span>
                                 </div>
                                 <div class="stat-bar-bg">
@@ -661,20 +663,8 @@
             window.scrollTo(0, 0);
         }
 
-        const startBtn = document.getElementById('start-btn');
-        const restartBtn = document.getElementById('restart-btn');
-
-        if (startBtn) {
-            startBtn.addEventListener('click', startQuiz);
-            startBtn.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                startQuiz();
-            }, { passive: false });
-        }
-
-        if (restartBtn) {
-            restartBtn.addEventListener('click', restartQuiz);
-        }
+        document.getElementById('start-btn').addEventListener('click', startQuiz);
+        document.getElementById('restart-btn').addEventListener('click', restartQuiz);
 
         initScores();
     });
