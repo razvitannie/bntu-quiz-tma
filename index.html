@@ -173,17 +173,18 @@
         }
 
         .fac-title {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
             color: var(--primary-color);
             margin-bottom: 6px;
             text-align: center;
+            line-height: 1.25;
         }
 
         .fac-desc {
             font-size: 13px;
             color: var(--hint-color);
-            line-height: 1.5;
+            line-height: 1.4;
             margin-bottom: 16px;
             text-align: center;
         }
@@ -221,7 +222,7 @@
             line-height: 1.3;
         }
 
-        /* Статистика с процентами */
+        /* Статистика */
         .stats-box {
             background: var(--bg-color);
             border-radius: 14px;
@@ -236,23 +237,40 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .stat-item {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .stat-item:last-child {
             margin-bottom: 0;
         }
 
-        .stat-info {
+        /* Устойчивая верстка заголовка элемента статистики */
+        .stat-header {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 4px;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .stat-name {
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text-color);
+            flex: 1;
+        }
+
+        .stat-count {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap; /* Гарантирует, что проценты не разобьются на несколько строк */
+            text-align: right;
         }
 
         .stat-bar-bg {
@@ -369,7 +387,6 @@
 </div>
 
 <script>
-    // Ваша новая обновленная рабочая ссылка Google Apps Script
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxbJeg7lw7USPfwV10OxlalI3aqAHUMI_jXQvpBk0pRmMxeOLawnbZFvtbXUvHcmK1M/exec';
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -379,47 +396,47 @@
             tg.expand();
         }
 
-        // 6 реальных направлений ФИТР БНТУ
+        // Лаконичные описания в одно предложение
         const faculties = {
             SE: { 
                 name: "Программная инженерия", 
                 full: "Бакалавр. Инженер-программист", 
-                desc: "Разработка ПО, архитектура сложных систем, алгоритмы, базы данных и современные языки программирования.", 
+                desc: "Разработка ПО, архитектура сложных систем, алгоритмы и современные языки программирования.", 
                 secret: "CPLUSPLUS 💻", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             },
             IT: { 
                 name: "Информационные системы и технологии", 
-                full: "В проектировании и производстве • Бакалавр. Инженер-программист", 
-                desc: "Интеграция IT-решений в реальное производство, САПР и цифровизация инженерных задач.", 
+                full: "Бакалавр. Инженер-программист", 
+                desc: "Внедрение IT-решений, САПР и цифровизация процессов в проектировании и производстве.", 
                 secret: "CYBER_SYS ⚡", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             },
             AUT_PRIB: { 
                 name: "Автоматизация в приборостроении и радиоэлектронике", 
-                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
-                desc: "Создание умных приборов, микроэлектроника, датчики и автоматизированные системы контроля.", 
+                full: "Бакалавр. Инженер", 
+                desc: "Создание умных приборов, микроэлектроника, датчики и автоматизированный контроль.", 
                 secret: "SENSORS 🔬", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             },
             AUT_ENERG: { 
                 name: "Автоматизация в энергетике", 
-                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
-                desc: "Управление энергосетями, автоматика электростанций и ресурсосберегающие технологии.", 
+                full: "Бакалавр. Инженер", 
+                desc: "Управление энергосетями, автоматика электростанций и энергосбережение.", 
                 secret: "ENERGY_PRO 💡", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             },
             AUT_DRIVE: { 
                 name: "Автоматизированные электроприводы", 
-                full: "Автоматизация технологических процессов • Бакалавр. Инженер", 
-                desc: "Современные электроприводы, системы управления движением и промышленная мехатроника.", 
+                full: "Бакалавр. Инженер", 
+                desc: "Современные электроприводы, системы управления движением и мехатроника.", 
                 secret: "ROBOT_DRIVE ⚙️", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             },
             ROBOTS: { 
                 name: "Робототехнические системы", 
-                full: "Промышленные роботы и робототехнические комплексы • Бакалавр. Инженер", 
-                desc: "Проектирование и программирование промышленных роботов, манипуляторов и гибких производств.", 
+                full: "Бакалавр. Инженер", 
+                desc: "Проектирование и программирование промышленной робототехники и манипуляторов.", 
                 secret: "TRANSFORMER 🤖", 
                 map: "https://yandex.by/maps/-/CDuPFL~C" 
             }
@@ -589,17 +606,14 @@
 
             const fac = faculties[bestFac];
             document.getElementById('faculty-title').innerText = fac.name;
-            document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
+            document.getElementById('faculty-desc').innerText = `${fac.full} • ${fac.desc}`;
             
             const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
             document.getElementById('match-score').innerText = `${percent}%`;
             document.getElementById('map-link').href = fac.map;
             document.getElementById('secret-word-text').innerText = fac.secret;
 
-            // 1. Отправляем голос в таблицу
             sendVoteToSheet(fac.name);
-
-            // 2. Загружаем и выводим статистику направлений ФИТР
             loadStats();
         }
 
@@ -634,11 +648,9 @@
 
                         html += `
                             <div class="stat-item">
-                                <div class="stat-info">
-                                    <span><b>${item.faculty}</b></span>
-                                    <span style="color: var(--primary-color); font-weight: 700;">
-                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span> 
-                                    </span>
+                                <div class="stat-header">
+                                    <span class="stat-name">${item.faculty}</span>
+                                    <span class="stat-count">${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 11px;">(${item.count} чел.)</span></span>
                                 </div>
                                 <div class="stat-bar-bg">
                                     <div class="stat-bar-fill" style="width: ${percentage}%;"></div>
