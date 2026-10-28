@@ -222,7 +222,6 @@
             line-height: 1.3;
         }
 
-        /* Статистика с процентами */
         .stats-box {
             background: var(--bg-color);
             border-radius: 14px;
@@ -352,7 +351,6 @@
             <p class="secret-word-hint">Скажи это слово волонтёрам на стенде ФИТР, чтобы забрать свой подарок!</p>
         </div>
 
-        <!-- ТОП-6 НАПРАВЛЕНИЙ С ПРОЦЕНТАМИ -->
         <div class="stats-box">
             <div class="stats-title">📊 ТОП направлений ФИТР среди абитуриентов</div>
             <div id="stats-content">
@@ -370,7 +368,8 @@
 </div>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzW6VyWHw5Dkua1RXZw6LSMmfk5Qh0l4kGiKKJQg06pnM_atuJfNTe4oVybMCOcl18/exec';
+    // Ваша актуальная ссылка из Google Apps Script
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbThGRCiQ4ZErSedblLkyLyBsU1NHMBnTCLoe_uRBYDsEvvO9lqjZx1tdBeLqySyeyQ/exec';
 
     document.addEventListener("DOMContentLoaded", function () {
         const tg = window.Telegram?.WebApp;
@@ -379,7 +378,6 @@
             tg.expand();
         }
 
-        // 6 вариантов направлений ФИТР согласно официальным данным
         const faculties = {
             SE: { 
                 name: "Программная инженерия", 
@@ -588,86 +586,4 @@
             }
 
             const fac = faculties[bestFac];
-            document.getElementById('faculty-title').innerText = fac.name;
-            document.getElementById('faculty-desc').innerText = `${fac.full} — ${fac.desc}`;
-            
-            const percent = Math.min(99, Math.max(82, 80 + maxScore * 2));
-            document.getElementById('match-score').innerText = `${percent}%`;
-            document.getElementById('map-link').href = fac.map;
-            document.getElementById('secret-word-text').innerText = fac.secret;
-
-            // 1. Отправляем голос в таблицу (сохраняет название направления ФИТР)
-            sendVoteToSheet(fac.name);
-
-            // 2. Загружаем и выводим статистику по направлениям ФИТР
-            loadTopStats();
-        }
-
-        function sendVoteToSheet(specialtyName) {
-            if (!WEB_APP_URL) return;
-            
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ faculty: specialtyName }) // ключ faculty сохранен для совместимости с вашей таблицей
-            }).catch(err => console.log('Stat send error:', err));
-        }
-
-        function loadTopStats() {
-            const container = document.getElementById('stats-content');
-            container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Загрузка рейтинга...</p>';
-
-            fetch(WEB_APP_URL)
-                .then(res => res.json())
-                .then(data => {
-                    if (!data || data.length === 0) {
-                        container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Будь первым, кто прошел опрос!</p>';
-                        return;
-                    }
-
-                    const totalVotes = data.reduce((sum, item) => sum + item.count, 0);
-
-                    let html = '';
-                    data.forEach((item) => {
-                        const percentage = totalVotes > 0 ? Math.round((item.count / totalVotes) * 100) : 0;
-
-                        html += `
-                            <div class="stat-item">
-                                <div class="stat-info">
-                                    <span style="font-size: 12px;"><b>${item.faculty}</b></span>
-                                    <span style="color: var(--primary-color); font-weight: 700; font-size: 12px;">
-                                        ${percentage}% <span style="color: var(--hint-color); font-weight: 400; font-size: 10px;">(${item.count} чел.)</span>
-                                    </span>
-                                </div>
-                                <div class="stat-bar-bg">
-                                    <div class="stat-bar-fill" style="width: ${percentage}%;"></div>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    container.innerHTML = html;
-                })
-                .catch(err => {
-                    container.innerHTML = '<p style="text-align: center; color: var(--hint-color); font-size: 12px; padding: 10px;">Рейтинг станет доступен после первых прохождений.</p>';
-                });
-        }
-
-        function restartQuiz() {
-            initScores();
-            currentQuestion = 0;
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('start-screen').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
-
-        document.getElementById('start-btn').addEventListener('click', startQuiz);
-        document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-
-        initScores();
-    });
-</script>
-</body>
-</html>
+            document.getElementById('faculty-title
